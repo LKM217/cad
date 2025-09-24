@@ -1,15 +1,15 @@
 {%- if section.blocks.size > 0 -%}
   {%- assign color_scheme_hash = section.settings.color_scheme.settings.background_gradient | default: section.settings.color_scheme.settings.background | md5 -%}
 
-  <div class="color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} {% unless section.settings.remove_vertical_spacing %}section-spacing{% endunless %} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
+  <div class="color-scheme color-scheme--{{ section.settings.color_scheme.id }} color-scheme--bg-{{ color_scheme_hash }} rich-text--moma {% unless section.settings.remove_vertical_spacing %}section-spacing{% endunless %} {% if section.settings.separate_section_with_border %}bordered-section{% endif %}">
     <div class="container container--{{ section.settings.content_width }}">
-      <div class="prose text-{{ section.settings.text_position }}">
+      <div class="prose prose--moma text-{{ section.settings.text_position }}">
         {%- assign is_inside_button_group_context = false -%}
 
         {%- for block in section.blocks -%}
           {%- if block.type == 'button' and is_inside_button_group_context == false -%}
             {%- assign is_inside_button_group_context = true -%}
-            <div class="button-group justify-{{ section.settings.text_position }}">
+            <div class="button-group button-group--moma justify-{{ section.settings.text_position }}">
           {%- elsif block.type != 'button' and is_inside_button_group_context -%}
             {%- assign is_inside_button_group_context = false -%}
             </div>
@@ -18,31 +18,31 @@
           {%- case block.type -%}
             {%- when 'subheading' -%}
               {%- if block.settings.text != blank -%}
-                <p class="h6" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+                <p class="h6 rich-text__subheading--moma" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
               {%- endif -%}
 
             {%- when 'heading' -%}
               {%- if block.settings.text != blank -%}
-                <p class="{{ block.settings.heading_tag }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+                <p class="{{ block.settings.heading_tag }} rich-text__heading--moma" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
               {%- endif -%}
 
             {%- when 'richtext' -%}
               {%- if block.settings.content != blank -%}
-                <div {{ block.shopify_attributes }}>
+                <div class="rich-text__content--moma" {{ block.shopify_attributes }}>
                   {{- block.settings.content -}}
                 </div>
               {%- endif -%}
 
             {%- when 'page' -%}
               {%- if block.settings.page.content != blank -%}
-                <div {{ block.shopify_attributes }}>
+                <div class="rich-text__page--moma" {{ block.shopify_attributes }}>
                   {{- block.settings.page.content -}}
                 </div>
               {%- endif -%}
 
             {%- when 'image' -%}
               {%- if block.settings.image != blank -%}
-                <div {{ block.shopify_attributes }}>
+                <div class="rich-text__image--moma" {{ block.shopify_attributes }}>
                   {%- capture image_style_attribute -%}{% if section.settings.text_position == 'center' %}margin-inline: auto;{% elsif section.settings.text_position == 'end' %}margin-inline-start: auto;{% endif %}{%- endcapture -%}
 
                   {%- if block.settings.width_mode == 'custom' -%}
@@ -54,28 +54,28 @@
                     {%- assign image_widths = '200,300,400,500,600,800,1000,1200,1400,1600' -%}
                   {%- endif -%}
 
-                  {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: sizes: image_sizes_attribute, widths: image_widths, class: 'constrained-image', style: image_style_attribute -}}
+                  {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: sizes: image_sizes_attribute, widths: image_widths, class: 'constrained-image rich-text__image-element--moma', style: image_style_attribute -}}
                 </div>
               {%- endif -%}
 
             {%- when 'video' -%}
               {%- if block.settings.video != blank -%}
-                <div {{ block.shopify_attributes }}>
-                  {%- render 'media', media: block.settings.video, controls: true -%}
+                <div class="rich-text__video--moma" {{ block.shopify_attributes }}>
+                  {%- render 'media', media: block.settings.video, controls: true, class: 'rich-text__video-element--moma' -%}
                 </div>
               {%- endif -%}
 
             {%- when 'link' -%}
-              <a {% if block.settings.url %}href="{{ block.settings.url }}"{% endif %} class="link" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</a>
+              <a {% if block.settings.url %}href="{{ block.settings.url }}"{% endif %} class="link rich-text__link--moma" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</a>
 
             {%- when 'button' -%}
               {%- if block.settings.text != blank -%}
-                {% render 'button', content: block.settings.text, href: block.settings.url, size: block.settings.size, style: block.settings.style, background: block.settings.background, text_color: block.settings.text_color, block: block %}
+                {% render 'button', content: block.settings.text, href: block.settings.url, size: block.settings.size, style: block.settings.style, background: block.settings.background, text_color: block.settings.text_color, block: block, class: 'button--moma' %}
               {%- endif -%}
 
             {%- when 'liquid' -%}
               {%- if block.settings.liquid != blank -%}
-                <div {{ block.shopify_attributes }}>
+                <div class="rich-text__liquid--moma" {{ block.shopify_attributes }}>
                   {{- block.settings.liquid -}}
                 </div>
               {%- endif -%}
