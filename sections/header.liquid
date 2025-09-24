@@ -59,7 +59,7 @@
 </style>
 
 <height-observer variable="header">
-  <x-header {% if section.settings.hide_on_scroll and section.settings.enable_sticky %}hide-on-scroll{% endif %} class="header color-scheme color-scheme--{{ section.settings.color_scheme.id }}">
+  <x-header {% if section.settings.hide_on_scroll and section.settings.enable_sticky %}hide-on-scroll{% endif %} class="header header--moma color-scheme color-scheme--{{ section.settings.color_scheme.id }}">
     {%- comment -%}
     --------------------------------------------------------------------------------------------------------------------
     LOGO AREA
@@ -73,22 +73,22 @@
 
         <span class="sr-only">{{ shop.name }}</span>
         {%- assign alt_text = section.settings.logo.alt | default: shop.name -%}
-        {{- section.settings.logo | image_url: width: section.settings.logo.width | image_tag: sizes: sizes, alt: alt_text, widths: widths, class: 'header__logo-image' -}}
+        {{- section.settings.logo | image_url: width: section.settings.logo.width | image_tag: sizes: sizes, alt: alt_text, widths: widths, class: 'header__logo-image header__logo-image--moma' -}}
 
         {%- if section.settings.transparent_logo -%}
-          {{- section.settings.transparent_logo | image_url: width: section.settings.transparent_logo.width | image_tag: sizes: sizes, widths: widths, class: 'header__logo-image header__logo-image--transparent' -}}
+          {{- section.settings.transparent_logo | image_url: width: section.settings.transparent_logo.width | image_tag: sizes: sizes, widths: widths, class: 'header__logo-image header__logo-image--transparent header__logo-image--moma' -}}
         {%- endif -%}
       {%- else -%}
-        <span class="header__logo-text h5">{{ shop.name }}</span>
+        <span class="header__logo-text header__logo-text--moma h5">{{ shop.name }}</span>
       {%- endif -%}
     {%- endcapture -%}
 
     {%- if request.page_type == 'index' -%}
-      <h1 class="header__logo">
+      <h1 class="header__logo header__logo--moma">
         <a href="{{ routes.root_url }}">{{ logo_content }}</a>
       </h1>
     {% else %}
-      <a href="{{ routes.root_url }}" class="header__logo">{{ logo_content }}</a>
+      <a href="{{ routes.root_url }}" class="header__logo header__logo--moma">{{ logo_content }}</a>
     {% endif %}
 
     {%- comment -%}
@@ -101,10 +101,10 @@
     {%- assign sidebar_menu = section.settings.sidebar_menu -%}
 
     {%- if menu.links.size > 0 or sidebar_menu.links.size > 0 -%}
-      <nav class="header__primary-nav {% if section.settings.layout == 'logo_center_navigation_below' or section.settings.layout == 'logo_left_navigation_center' %}header__primary-nav--center{% endif %}" aria-label="{{ 'header.general.primary_navigation' | t | escape }}">
-        <button type="button" aria-controls="sidebar-menu" {% unless section.settings.layout == 'drawer' %}class="md:hidden"{% endunless %}>
+      <nav class="header__primary-nav header__primary-nav--moma {% if section.settings.layout == 'logo_center_navigation_below' or section.settings.layout == 'logo_left_navigation_center' %}header__primary-nav--center{% endif %}" aria-label="{{ 'header.general.primary_navigation' | t | escape }}">
+        <button type="button" aria-controls="sidebar-menu" class="header__menu-button--moma {% unless section.settings.layout == 'drawer' %}md:hidden{% endunless %}">
           <span class="sr-only">{{ 'header.general.menu' | t }}</span>
-          {%- render 'icon' with 'hamburger', class: 'header__nav-icon' -%}
+          {%- render 'icon' with 'hamburger', class: 'header__nav-icon header__nav-icon--moma' -%}
         </button>
 
         {%- if menu.links.size > 0 and section.settings.layout != 'drawer' -%}
@@ -125,9 +125,9 @@
                 endfor
               %}
 
-              <li class="header__primary-nav-item" data-title="{{ link.title | escape }}">
+              <li class="header__primary-nav-item header__primary-nav-item--moma" data-title="{{ link.title | escape }}">
                 {%- if link.levels == 0 and mega_menu_block == '' -%}
-                  <a href="{{ link.url }}" class="block {% if section.settings.menu_text_font == 'heading' %}h6{% endif %}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+                  <a href="{{ link.url }}" class="block header__nav-link--moma {% if section.settings.menu_text_font == 'heading' %}h6{% endif %}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
                 {%- else -%}
                   {%- capture disclosure_content -%}
                     <details class="header__menu-disclosure">
@@ -193,7 +193,7 @@
     --------------------------------------------------------------------------------------------------------------------
     {%- endcomment -%}
 
-    <nav class="header__secondary-nav" aria-label="{{ 'header.general.secondary_navigation' | t | escape }}">
+    <nav class="header__secondary-nav header__secondary-nav--moma" aria-label="{{ 'header.general.secondary_navigation' | t | escape }}">
       {%- liquid
         if section.settings.show_country_selector and localization.available_countries.size > 1
           assign show_country_selector = true
@@ -227,16 +227,16 @@
         {%- endfor -%}
 
         {%- if shop.customer_accounts_enabled -%}
-          <li class="header__account-link sm-max:hidden">
-            <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">
+          <li class="header__account-link header__account-link--moma sm-max:hidden">
+            <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__account-button--moma">
               <span class="sr-only">{% if customer %}{{ 'header.general.account' | t }}{% else %}{{ 'header.general.login' | t }}{% endif %}</span>
 
               {%- if section.settings.show_icons -%}
-                {%- render 'icon' with 'account', class: 'header__nav-icon' -%}
+                {%- render 'icon' with 'account', class: 'header__nav-icon header__nav-icon--moma' -%}
               {%- else -%}
-                <span class="md:hidden">{%- render 'icon' with 'account', class: 'header__nav-icon' -%}</span>
+                <span class="md:hidden">{%- render 'icon' with 'account', class: 'header__nav-icon header__nav-icon--moma' -%}</span>
 
-                <span class="{% if section.settings.menu_text_font == 'heading' %}h6{% endif %} link-faded md-max:hidden" aria-hidden="true">
+                <span class="{% if section.settings.menu_text_font == 'heading' %}h6{% endif %} link-faded header__account-text--moma md-max:hidden" aria-hidden="true">
                   {%- if customer -%}
                     {{- 'header.general.account' | t -}}
                   {%- else -%}
@@ -249,32 +249,32 @@
         {%- endif -%}
 
         {%- if section.settings.enable_search -%}
-          <li class="header__search-link">
-            <a href="{{ routes.search_url }}" aria-controls="header-search-{{ section.id }}">
+          <li class="header__search-link header__search-link--moma">
+            <a href="{{ routes.search_url }}" aria-controls="header-search-{{ section.id }}" class="header__search-button--moma">
               <span class="sr-only">{{ 'header.general.search' | t }}</span>
 
               {%- if section.settings.show_icons -%}
-                {%- render 'icon' with 'search', class: 'header__nav-icon' -%}
+                {%- render 'icon' with 'search', class: 'header__nav-icon header__nav-icon--moma' -%}
               {%- else -%}
-                <span class="md:hidden">{%- render 'icon' with 'search', class: 'header__nav-icon' -%}</span>
-                <span class="{% if section.settings.menu_text_font == 'heading' %}h6{% endif %} link-faded md-max:hidden" aria-hidden="true">{{ 'header.general.search' | t }}</span>
+                <span class="md:hidden">{%- render 'icon' with 'search', class: 'header__nav-icon header__nav-icon--moma' -%}</span>
+                <span class="{% if section.settings.menu_text_font == 'heading' %}h6{% endif %} link-faded header__search-text--moma md-max:hidden" aria-hidden="true">{{ 'header.general.search' | t }}</span>
               {%- endif -%}
             </a>
           </li>
         {%- endif -%}
 
-        <li class="relative header__cart-link">
-          <a href="{{ routes.cart_url }}" {% if settings.cart_type != 'page' and request.page_type != 'cart' %}aria-controls="cart-drawer"{% endif %} data-no-instant>
+        <li class="relative header__cart-link header__cart-link--moma">
+          <a href="{{ routes.cart_url }}" {% if settings.cart_type != 'page' and request.page_type != 'cart' %}aria-controls="cart-drawer"{% endif %} data-no-instant class="header__cart-button--moma">
             <span class="sr-only">{{ 'header.general.cart' | t }}</span>
 
             {%- if section.settings.show_icons -%}
-              {%- render 'icon' with 'cart', class: 'header__nav-icon' -%}
+              {%- render 'icon' with 'cart', class: 'header__nav-icon header__nav-icon--moma' -%}
             {%- else -%}
-              <span class="md:hidden">{%- render 'icon' with 'cart', class: 'header__nav-icon' -%}</span>
-              <span class="{% if section.settings.menu_text_font == 'heading' %}h6{% endif %} link-faded md-max:hidden">{{ 'header.general.cart' | t }} (<cart-count>{{ cart.item_count }}</cart-count>)</span>
+              <span class="md:hidden">{%- render 'icon' with 'cart', class: 'header__nav-icon header__nav-icon--moma' -%}</span>
+              <span class="{% if section.settings.menu_text_font == 'heading' %}h6{% endif %} link-faded header__cart-text--moma md-max:hidden">{{ 'header.general.cart' | t }} (<cart-count>{{ cart.item_count }}</cart-count>)</span>
             {%- endif -%}
 
-            <cart-dot class="header__cart-dot {% unless cart.empty? %}is-visible{% endunless %} {% unless section.settings.show_icons %}md:hidden{% endunless %}"></cart-dot>
+            <cart-dot class="header__cart-dot header__cart-dot--moma {% unless cart.empty? %}is-visible{% endunless %} {% unless section.settings.show_icons %}md:hidden{% endunless %}"></cart-dot>
           </a>
         </li>
       </ul>
