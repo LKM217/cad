@@ -76,9 +76,8 @@
 }
 
 @theme inline {
-  /* Modern typography system with Inter for navigation and Playfair for titles */
+  /* MoMA-style typography system - only sans-serif, no serif */
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Playfair Display", "Times New Roman", serif;
   --font-mono: "JetBrains Mono", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -122,21 +121,21 @@
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
-  /* Modern typography hierarchy - big bold titles, small navigation */
+  /* MoMA-style typography - all sans-serif, clean hierarchy */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-serif font-bold;
+    @apply font-sans font-normal;
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.01em;
   }
 
-  /* Small navigation typography */
+  /* Ultra-small navigation like MoMA */
   .nav-text {
-    @apply text-xs font-sans font-medium uppercase tracking-widest;
+    @apply text-xs font-sans font-normal uppercase tracking-wide;
   }
 
   .text-balance {
@@ -148,7 +147,7 @@
   }
 }
 
-/* Updated custom classes for minimal black and white aesthetic */
+/* MoMA-inspired custom classes - ultra minimal */
 .cahier-hero {
   background: rgb(var(--background));
 }
@@ -157,27 +156,31 @@
   color: rgb(var(--foreground));
 }
 
-/* Bigger, bolder titles for modern look */
+/* MoMA-style large text - clean sans-serif, not too bold */
 .cahier-text-large {
-  font-size: clamp(3rem, 10vw, 8rem);
-  line-height: 0.85;
-  font-weight: 900;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 0.9;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .cahier-text-medium {
-  font-size: clamp(2rem, 6vw, 4rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
+/* More generous spacing like MoMA */
 .cahier-section {
-  padding: clamp(5rem, 12vw, 10rem) 0;
+  padding: clamp(6rem, 15vw, 12rem) 0;
 }
 
-/* Minimal button styles */
+/* Ultra-minimal button styles like MoMA */
 .minimal-button {
-  @apply border border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background transition-all duration-300;
+  @apply border border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background transition-all duration-200;
   border-radius: 0;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
 }
